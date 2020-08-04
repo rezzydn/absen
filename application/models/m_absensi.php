@@ -7,36 +7,24 @@ class M_absensi extends CI_Model {
     return $this->db->get('absensi');
     }
 
-    public function hitungabsen()
-    {
-        $this->db->select_sum('id');
-        $query = $this->db->get('absen');
-        if($query->num_rows()>0)
-        {
-            return $query->row()->id;
-        }
-        else
-        {
-            return 0;
-        }
+    function absen_masuk(){
+        date_default_timezone_set('Asia/Jakarta');
+        $data = array(
+            'tgl_absen_masuk' => mdate('%Y-%m-%d %H:%i:%s', now())
+        );
+
+        $this->db->set($data);
+        $this->db->insert('absen', $data);
+        redirect('../absensi/karyawan');
     }
 
-    function absenjoin($id){
-		$this->db->select();
-		$this->db->from('karyawan as kry');
-		$this->db->join('absen as abs', 'abs.karyawan_id = kry.id');
-		$this->db->where('b.id',$id);
-		$result= $this->db->get();
-		return $result;
-    }
-    
-    
-    function tambah_data(){
+    function absen_pulang($id_absen){
+        date_default_timezone_set('Asia/Jakarta');
         $data = array(
-					'tgl_absen_masuk' => $this->input->post('tgl_absen_masuk'),
-					'tgl_absen_keluar' => $this->input->post('tgl_absen_keluar')
-			);
-		$this->db->insert('absensi',$data);
-		redirect('../absensi');
+            'tgl_absen_keluar' => mdate('%Y-%m-%d %H:%i:%s', now())
+        );
+        
+        $this->db->update('absen', $data, array('tgl_absen_keluar' => $id_absen));
+        redirect('../absensi/karyawan');
     }
 }

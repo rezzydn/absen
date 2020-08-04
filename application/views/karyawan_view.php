@@ -12,7 +12,14 @@
                         <div class="card-box table-responsive">
                             <h2 class="m-t-0 header-title" style="text-align: center; margin-bottom: 20px;"><b><?php echo $this->session->userdata("karyawan"); ?></b></h2>
                             <div style="width: 100%; text-align: center; margin-bottom: 40px;">
-                                <button type="button" class="btn btn-success btn-rounded waves-effect waves-light">Presensi Masuk</button> &nbsp;&nbsp;&nbsp;&nbsp; <button type="button" class="btn btn-danger btn-rounded waves-effect waves-light">Presensi Keluar</button>
+                                <form method="post" action="<?php echo base_url('absensi/absen_masuk'); ?>">
+                                <input type="hidden" name="karyawan_id" id="karyawan_id" value="<?php echo $this->session->userdata("karyawan_id"); ?>">
+		                            <button id="btn_masuk" onClick="return disableMe()" type="submit" class="btn btn-success btn-rounded waves-effect waves-light">Presensi Masuk</button>
+	                            </form>
+                                </br>
+                                <form method="post" action="<?php echo base_url('absensi/absen_pulang'); ?>">
+		                            <button type="submit" class="btn btn-danger btn-rounded waves-effect waves-light">Presensi Pulang</button>
+	                            </form>
                             </div>
 
                             <table id="datatable" class="table table-striped table-bordered">

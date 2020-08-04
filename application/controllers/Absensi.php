@@ -5,7 +5,9 @@ class Absensi extends CI_Controller {
 	function __construct(){
 		parent::__construct();		
 				$this->load->model('m_absensi');
-                $this->load->helper('url');
+				$this->load->helper('url');
+				$this->load->helper('date');
+				$this->db->order_by('id_absen', 'desc');
 	}
 
 	public function index()
@@ -18,9 +20,14 @@ class Absensi extends CI_Controller {
 		$this->load->view('footer', $data);
 	}
 
-	function detail($id)
-	{
-		$data['detailabsen'] = $this->m_absensi->absenjoin($id);
-		$this->load->view('detail_absen_view', $data);
+	public function absen_masuk() {
+		$karyawan_id = $this->input->post('karyawan_id');
+
+		$this->m_absensi->absen_masuk();
 	}
+
+	public function absen_pulang() {
+		$this->m_absensi->absen_pulang($id_absen);
+	}
+
 }
